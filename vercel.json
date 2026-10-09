@@ -3,5 +3,5 @@
   "framework": null,
   "installCommand": "",
   "buildCommand": "",
-  "outputDirectory": "rups vercel/public"
+  "outputDirectory": "rups-github/public"
 }
