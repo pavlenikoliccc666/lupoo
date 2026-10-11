@@ -19,6 +19,6 @@ The Vercel code is ready, but accounts, a verified sending domain and server sec
 
 Never commit real secrets, passwords or setup links. `pavle123` is not installed as a default password. Passwords are salted and hashed with scrypt; session tokens and verification codes are hashed. Codes expire in 10 minutes with five attempts. Send requests are limited per IP and per email; login attempts are limited per IP. Pending records are cleaned during subsequent API activity; for strict periodic cleanup, schedule deletion of expired pending rows in Supabase.
 
-Vercel Root Directory remains `rups-github`; the included config serves `public` and discovers `api/[...path].js`. The legacy Cloudflare Worker files are retained but are not used by the Vercel backend. Do not publish the new frontend with that legacy backend.
+Vercel Root Directory remains `rups-github`; the included config serves `public` and routes API requests to `api/handler.js`. The legacy Cloudflare Worker files are retained but are not used by the Vercel backend. Do not publish the new frontend with that legacy backend.
 
 Tests: `node --test scripts/vercel-api.test.mjs`. They mock provider HTTP calls; they are not evidence of a live Supabase or Resend connection.

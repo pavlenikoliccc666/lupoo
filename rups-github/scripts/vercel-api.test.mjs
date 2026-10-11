@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createHandler,passwordHash,passwordMatches} from '../api/[...path].js';
+import {createHandler,passwordHash,passwordMatches} from '../api/handler.js';
 
 const env={APP_ORIGIN:'https://rups.test',SUPABASE_URL:'https://db.test',SUPABASE_SERVICE_ROLE_KEY:'test-only',RESEND_API_KEY:'test-only',RESEND_FROM:'Rups <verification@example.com>',OTP_SECRET:'test-only-secret-at-least-32-characters'};
 const payload={name:'Test Person',email:'test@example.com',clinic:'Test Clinic',phone:'',interest:'All of the above'};

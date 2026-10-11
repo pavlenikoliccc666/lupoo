@@ -64,7 +64,8 @@ export function createHandler(env = process.env, transport = fetch) {
     res.setHeader('Cache-Control','no-store'); res.setHeader('X-Content-Type-Options','nosniff'); res.setHeader('X-Robots-Tag','noindex, nofollow');
     try {
       const url = new URL(req.url, 'https://rups.invalid');
-      const path = url.pathname;
+      const route = req.query?.route || url.searchParams.get('route');
+      const path = route ? '/api/' + route : url.pathname;
       const ip = req.headers['x-vercel-forwarded-for'] || req.headers['x-real-ip'] || 'unknown';
       if (!['POST','GET'].includes(req.method)) fail('Method not allowed.',405);
       if (req.method === 'POST') {
