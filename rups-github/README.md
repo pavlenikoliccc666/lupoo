@@ -48,7 +48,7 @@ Production needs a Cloudflare Worker-compatible host with a D1 binding named `DB
 
 For initial production admin setup, generate a random 32-byte token represented as 64 hexadecimal characters. Store only its SHA-256 hex digest as the server secret `ADMIN_SETUP_HASH`, and a future Unix timestamp in milliseconds as `ADMIN_SETUP_EXPIRES`. Open your site's `/admin#setup=TOKEN` once to choose a password. Never put the token or password in public source or commits. An existing admin account prevents this setup link from being reused.
 
-The enquiry form stores submissions in D1. It does not send email notifications or book meetings. The administrator reads submissions at `/admin`. Email links use enquiries@rups.io and privacy@rups.io; publishing the code does not create these mailboxes.
+The enquiry form stores submissions in D1. It does not send email notifications or book meetings. The administrator reads submissions at `/admin`. Email links use support@rups.io and privacy@rups.io; publishing the code does not create these mailboxes.
 
 Legal pages have no animations. The supplied Rups logo and blue palette are integrated. Social links point to Instagram rups.io and X tryrups. FAQs describe WhatsApp, Instagram, Viber and clinic-number messaging, with voice calling marked as coming soon. These are descriptions of the business service; the website itself does not implement those messaging integrations.
 

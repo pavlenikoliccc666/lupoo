@@ -1,3 +1,5 @@
+import { bindCodeInputs } from './code-inputs.js';
+
 const dialog = document.querySelector('#demo-dialog');
 const form = document.querySelector('#demo-form');
 const status = document.querySelector('#form-status');
@@ -20,14 +22,33 @@ dialog.addEventListener('click', event => {
 const verifyForm = document.createElement('form');
 verifyForm.id = 'verify-form';
 verifyForm.hidden = true;
-verifyForm.innerHTML = '<p id="verification-email"></p><label>Email verification code<input name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" minlength="6" maxlength="6" required placeholder="Six-digit code"></label><p class="form-note">Your code expires in 10 minutes. Check your spam folder too.</p><button class="button" type="submit">Verify and request demo ↗</button><button type="button" id="resend-code" class="button">Send a new code</button><button type="button" id="edit-details" class="button">Edit details</button>';
+verifyForm.innerHTML = `
+  <div class="verification-brand"><img src="assets/rups-logo.png" alt="Rups" width="88" height="88"></div>
+  <p class="eyebrow blue">ONE LAST STEP</p>
+  <h2 id="verification-title">Check your inbox.</h2>
+  <p id="verification-email"></p>
+  <fieldset class="code-fieldset"><legend>Enter your 6-digit code</legend>
+    <div class="code-inputs">${Array.from({length:6},(_,i)=>`<input name="digit${i+1}" type="text" inputmode="numeric" autocomplete="${i===0?'one-time-code':'off'}" pattern="[0-9]" maxlength="6" required aria-label="Digit ${i+1} of 6" aria-describedby="code-help">`).join('')}</div>
+  </fieldset>
+  <p id="code-help" class="verification-help">Your code is valid for 10 minutes.<br>Can’t find it? Check your spam folder.</p>
+  <button class="button verify-submit" type="submit">Verify email <span aria-hidden="true">↗</span></button>
+  <div class="verification-actions"><button type="button" id="resend-code" class="text-button">Send a new code</button><span aria-hidden="true">·</span><button type="button" id="edit-details" class="text-button">Change email</button></div>
+  <p class="verification-support">Need a hand? <a href="mailto:support@rups.io">Contact support</a></p>`;
 form.after(verifyForm);
 verifyForm.after(status);
+const codeInputs = bindCodeInputs(verifyForm.querySelectorAll('.code-inputs input'));
+function verificationMode(active) {
+  dialog.classList.toggle('verification-mode', active);
+  dialog.setAttribute('aria-labelledby', active ? 'verification-title' : 'demo-title');
+  form.hidden = active;
+  verifyForm.hidden = !active;
+  dialog.scrollTop = 0;
+}
 let challengeId, pendingDetails, resendAt = 0, busy = false;
 async function api(path, data) {
   const response = await fetch(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
   let result;
-  try { result = await response.json(); } catch { throw new Error('Temporarily unavailable. Please email enquiries@rups.io.'); }
+  try { result = await response.json(); } catch { throw new Error('Temporarily unavailable. Please email support@rups.io.'); }
   if (!response.ok) throw new Error(result.error || 'Please try again.');
   return result;
 }
@@ -36,9 +57,9 @@ async function sendCode() {
   if (!result.verificationRequired) throw new Error('Unable to send verification code.');
   challengeId = result.challengeId;
   resendAt = Date.now()+60000;
-  form.hidden = true; verifyForm.hidden = false;
-  verifyForm.querySelector('#verification-email').textContent = 'Enter the code sent to '+pendingDetails.email+'.';
-  verifyForm.reset(); verifyForm.elements.code.focus();
+  verificationMode(true);
+  verifyForm.querySelector('#verification-email').textContent = 'We sent a verification code to '+pendingDetails.email+'.';
+  verifyForm.reset(); codeInputs.focus();
   status.textContent = 'Code sent. Confirm your email to finish your demo request.';
 }
 setInterval(()=>{
@@ -49,7 +70,7 @@ setInterval(()=>{
 },1000);
 verifyForm.querySelector('#edit-details').onclick=()=>{
   if(busy)return;
-  verifyForm.hidden=true;form.hidden=false;challengeId=null;status.textContent='';form.elements.email.focus();
+  verificationMode(false);challengeId=null;status.textContent='';form.elements.email.focus();
 };
 verifyForm.querySelector('#resend-code').onclick=async()=>{
   if(busy||Date.now()<resendAt)return;
@@ -62,9 +83,9 @@ verifyForm.onsubmit=async event=>{
   busy=true;const button=verifyForm.querySelector('[type="submit"]');button.disabled=true;
   status.textContent='Verifying your email…';
   try {
-    const result=await api('/api/enquiries/verify',{challengeId,code:verifyForm.elements.code.value});
+    const result=await api('/api/enquiries/verify',{challengeId,code:codeInputs.value()});
     if(!result.saved)throw new Error('Unable to confirm your request.');
-    form.reset();verifyForm.reset();verifyForm.hidden=true;form.hidden=false;
+    form.reset();verifyForm.reset();verificationMode(false);
     pendingDetails=null;challengeId=null;
     status.textContent='Email verified — your request has been received. The Rups team will contact you to arrange your demo.';
   }catch(error){status.textContent=error.message;}
@@ -79,7 +100,7 @@ form.addEventListener('submit', async event => {
   try {
     pendingDetails=Object.fromEntries(new FormData(form));
     await sendCode();
-  } catch(error) {status.textContent=error.message||'Unable to send. Please try again or email enquiries@rups.io.';}
+  } catch(error) {status.textContent=error.message||'Unable to send. Please try again or email support@rups.io.';}
   finally {button.disabled=false;busy=false;}
 });
 document.querySelector('#year').textContent = new Date().getFullYear();

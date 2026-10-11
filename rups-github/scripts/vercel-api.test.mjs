@@ -38,6 +38,10 @@ test('does not store enquiry until valid email code; rejects replay',async()=>{
  assert.equal(sent.code,202);assert.equal(p.state.enquiries.length,0);
  assert.equal(sent.body.code,undefined);
  const code=p.state.mail[0].text.match(/\b\d{6}\b/)[0];
+ assert.match(p.state.mail[0].html, /src="https:\/\/rups.test\/assets\/rups-logo.png"/);
+ assert.ok(p.state.mail[0].html.includes(code));
+ assert.ok(p.state.mail[0].html.includes('mailto:support@rups.io'));
+ assert.ok(p.state.mail[0].text.includes('support@rups.io'));
  assert.notEqual(p.state.pending[0].code_hash,code);
  const wrong=await call(h,'/api/enquiries/verify',{challengeId:sent.body.challengeId,code:'000000'});
  assert.equal(wrong.code,400);

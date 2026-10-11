@@ -1,10 +1,11 @@
 import { randomBytes, randomInt, createHash, createHmac, scryptSync, timingSafeEqual } from 'node:crypto';
+import { verificationEmail } from '../lib/verification-email.js';
 
 const cookie = '__Host-rups_admin';
 const hash = value => createHash('sha256').update(value).digest('hex');
 const token = () => randomBytes(32).toString('hex');
 const fail = (message, status = 400) => { throw Object.assign(new Error(message), { status }); };
-const unavailable = () => fail('This service is not connected yet. Please email enquiries@rups.io.', 503);
+const unavailable = () => fail('This service is not connected yet. Please email support@rups.io.', 503);
 export function passwordHash(value, salt = randomBytes(16).toString('hex')) {
   if (typeof value !== 'string' || value.length < 8 || Buffer.byteLength(value) > 72) fail('Choose a password of 8–72 bytes.');
   return `${salt}:${scryptSync(value, salt, 64).toString('hex')}`;
@@ -86,11 +87,11 @@ export function createHandler(env = process.env, transport = fetch) {
         const id = token(), code = String(randomInt(100000,1000000));
         await db('rups_verifications','POST',{id,code_hash:otpHash(id,code),payload,expires_at:Date.now()+600000});
         try {
-          const sent = await transport('https://api.resend.com/emails', {method:'POST',headers:{Authorization:`Bearer ${env.RESEND_API_KEY}`,'Content-Type':'application/json','Idempotency-Key':`verification-${id}`},body:JSON.stringify({from:env.RESEND_FROM,to:[payload.email],subject:'Your Rups verification code',text:`Your Rups verification code is ${code}.\n\nIt expires in 10 minutes. Enter it on the Rups website to confirm your demo request.\n\nIf you did not request this code, ignore this email.`}),signal:AbortSignal.timeout(10000)});
+          const sent = await transport('https://api.resend.com/emails', {method:'POST',headers:{Authorization:`Bearer ${env.RESEND_API_KEY}`,'Content-Type':'application/json','Idempotency-Key':`verification-${id}`},body:JSON.stringify({from:env.RESEND_FROM,to:[payload.email],...verificationEmail(code,env.APP_ORIGIN)}),signal:AbortSignal.timeout(10000)});
           if (!sent.ok) throw new Error('Email rejected');
         } catch {
           await db(`rups_verifications?id=eq.${id}`,'DELETE');
-          fail('We could not send the code. Please try again later or email enquiries@rups.io.',503);
+          fail('We could not send the code. Please try again later or email support@rups.io.',503);
         }
         return res.status(202).json({verificationRequired:true,challengeId:id,expiresIn:600});
       }
@@ -140,7 +141,7 @@ export function createHandler(env = process.env, transport = fetch) {
       }
       fail('Not found.',404);
     } catch(error) {
-      return res.status(error.status || 503).json({error:error.status ? error.message : 'Temporarily unavailable. Please try again or email enquiries@rups.io.'});
+      return res.status(error.status || 503).json({error:error.status ? error.message : 'Temporarily unavailable. Please try again or email support@rups.io.'});
     }
   };
 }
