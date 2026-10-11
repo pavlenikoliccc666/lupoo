@@ -85,9 +85,9 @@ verifyForm.onsubmit=async event=>{
   try {
     const result=await api('/api/enquiries/verify',{challengeId,code:codeInputs.value()});
     if(!result.saved)throw new Error('Unable to confirm your request.');
-    form.reset();verifyForm.reset();verificationMode(false);
+    form.reset();verifyForm.reset();
     pendingDetails=null;challengeId=null;
-    status.textContent='Email verified — your request has been received. The Rups team will contact you to arrange your demo.';
+    window.location.replace('demo-success.html');
   }catch(error){status.textContent=error.message;}
   finally {busy=false;button.disabled=false;}
 };

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Demo requested — Rups</title>
+  <link rel="icon" href="assets/rups-logo.png" type="image/png">
+  <link rel="stylesheet" href="styles.css?v=verification-2">
+  <style>
+    body{min-height:100svh;display:flex;flex-direction:column;background:radial-gradient(ellipse at 50% 0%,#edf5ff,white 65%)}
+    .success-header{padding:28px max(24px,5vw)}
+    .success-main{width:min(100%,760px);margin:auto;padding:24px 24px 64px;text-align:center}
+    .success-check{width:76px;height:76px;margin:0 auto 30px;display:grid;place-items:center;background:#e8f2ff;color:var(--blue);border:1px solid #cee3ff;border-radius:50%}
+    .success-check svg{width:34px;height:34px}
+    .success-main .eyebrow{margin-bottom:18px;font-size:.7rem}
+    .success-main h1{font-size:clamp(2.6rem,6vw,4.5rem);line-height:1.07;max-width:680px;margin:auto}
+    .success-description{max-width:450px;margin:26px auto 30px;color:var(--muted);font-size:1.05rem;line-height:1.7}
+    .success-main .button{display:inline-flex}
+    .success-close-note{font-size:.8rem;color:var(--muted);margin-top:22px}
+    .success-help{text-align:center;padding:0 24px max(28px,env(safe-area-inset-bottom));font-size:.8rem;color:var(--muted)}
+    .success-help a{text-decoration:underline;text-underline-offset:3px}
+    @media(max-width:480px){.success-header{padding:22px}.success-main{padding:32px 22px 44px}.success-check{width:64px;height:64px;margin-bottom:26px}.success-description{font-size:.95rem}.success-main h1{font-size:2.65rem}}
+  </style>
+</head>
+<body>
+  <header class="success-header"><a class="brand" href="index.html" aria-label="Rups home"><span class="brand-mark"><img src="assets/rups-logo.png" alt="" width="36" height="36"></span><span>Rups</span></a></header>
+  <main class="success-main">
+    <div class="success-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg></div>
+    <p class="eyebrow blue">YOU’RE ALL SET</p>
+    <h1>You’ve successfully<br>requested a demo.</h1>
+    <p class="success-description">Your email is verified and your request is with our team. We’ll contact you to arrange your personal Rups demo.</p>
+    <a class="button" href="index.html">Back to homepage <span aria-hidden="true">↗</span></a>
+    <p class="success-close-note">You can safely close this tab. We’ll take it from here.</p>
+  </main>
+  <p class="success-help">Have a question? <a href="mailto:support@rups.io">support@rups.io</a></p>
+</body>
+</html>
