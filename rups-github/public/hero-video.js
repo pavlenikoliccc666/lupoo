@@ -3,12 +3,22 @@ if (heroVideo) {
   const videoMotionPreference = matchMedia('(prefers-reduced-motion: reduce)');
   let heroInView = true;
   heroVideo.muted = true;
+  const playButton = document.querySelector('.about-play');
+  if (heroVideo.dataset.mobileSrc && matchMedia('(max-width: 720px)').matches) {
+    heroVideo.src = heroVideo.dataset.mobileSrc;
+  }
+  const playHero = () => heroVideo.play().then(() => {
+    if (playButton) playButton.hidden = true;
+  }).catch(() => {
+    if (playButton) playButton.hidden = false;
+  });
+  playButton?.addEventListener('click', playHero);
   const syncHeroVideo = () => {
     if (document.hidden || !heroInView || videoMotionPreference.matches || navigator.connection?.saveData) {
       heroVideo.pause();
       return;
     }
-    heroVideo.play().catch(() => { /* Keep the poster when autoplay is unavailable. */ });
+    playHero();
   };
   document.addEventListener('visibilitychange', syncHeroVideo);
   videoMotionPreference.addEventListener('change', syncHeroVideo);

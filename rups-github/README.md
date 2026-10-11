@@ -62,3 +62,5 @@ Legal pages have no animations. The supplied Rups logo and blue palette are inte
 - 8× source: https://www.insidesales.com/response-time-matters/
 
 - About-page reception video by Pavel Danilyuk: https://www.pexels.com/video/man-inside-a-dental-clinic-6755025/ (Pexels licence; trimmed, resized, audio removed).
+
+About mobile update: `about-interior*.mp4` / poster use [Interior of a Dental Clinic by utopia 36](https://www.pexels.com/video/interior-of-a-dental-clinic-14934108/), under the [Pexels licence](https://www.pexels.com/license/). Edited for a shorter loop, modest colour correction, and 640px mobile / 1280px desktop delivery.
