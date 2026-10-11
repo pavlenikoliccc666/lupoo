@@ -71,3 +71,10 @@ html.no-motion .button:hover,html.no-motion .social-link:hover{transform:none}
 .verification-support a{text-decoration:underline;text-underline-offset:3px}
 .verification-mode .form-status{width:min(100%,440px);margin:18px auto 0;text-align:center;font-size:.8rem}
 @media(max-width:480px){#demo-dialog.verification-mode{padding:65px 20px max(24px,env(safe-area-inset-bottom))}.verification-brand img{width:70px;height:70px;margin-bottom:12px}.code-inputs{gap:7px}#verify-form .code-inputs input{height:58px;border-radius:10px;font-size:1.5rem}.code-fieldset{margin-top:26px}.verification-support{margin-top:28px}}
+
+/* Keep navigation visible while the page moves beneath the frosted surface. */
+.header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.97);box-shadow:0 1px 0 rgba(23,35,41,.07)}
+@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.header{background:rgba(255,255,255,.8);-webkit-backdrop-filter:blur(20px) saturate(150%);backdrop-filter:blur(20px) saturate(150%)}}
+.header .mobile-nav{top:100%;max-height:calc(100dvh - 90px);overflow-y:auto;background:rgba(255,255,255,.98)}
+html{scroll-padding-top:106px}
+@media(max-width:720px){html{scroll-padding-top:92px}.header .mobile-nav{max-height:calc(100dvh - 76px)}}
