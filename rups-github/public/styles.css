@@ -78,3 +78,4 @@ html.no-motion .button:hover,html.no-motion .social-link:hover{transform:none}
 .header .mobile-nav{top:100%;max-height:calc(100dvh - 90px);overflow-y:auto;background:rgba(255,255,255,.98)}
 html{scroll-padding-top:106px}
 @media(max-width:720px){html{scroll-padding-top:92px}.header .mobile-nav{max-height:calc(100dvh - 76px)}}
+.header .brand-mark{mix-blend-mode:multiply}
