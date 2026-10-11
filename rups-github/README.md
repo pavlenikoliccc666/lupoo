@@ -60,3 +60,5 @@ Legal pages have no animations. The supplied Rups logo and blue palette are inte
 - Pexels licence: https://www.pexels.com/license/
 - People shown do not imply an endorsement. Conversation examples are illustrative.
 - 8× source: https://www.insidesales.com/response-time-matters/
+
+- About-page reception video by Pavel Danilyuk: https://www.pexels.com/video/man-inside-a-dental-clinic-6755025/ (Pexels licence; trimmed, resized, audio removed).
