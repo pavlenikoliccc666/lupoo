@@ -7,12 +7,7 @@ if (heroVideo) {
   if (heroVideo.dataset.mobileSrc && matchMedia('(max-width: 720px)').matches) {
     heroVideo.src = heroVideo.dataset.mobileSrc;
   }
-  const playHero = () => heroVideo.play().then(() => {
-    if (playButton) playButton.hidden = true;
-  }).catch(() => {
-    if (playButton) playButton.hidden = false;
-  });
-  playButton?.addEventListener('click', playHero);
+  const playHero = () => heroVideo.play().catch(() => { /* Keep the poster if autoplay is blocked. */ });
   const syncHeroVideo = () => {
     if (document.hidden || !heroInView || videoMotionPreference.matches || navigator.connection?.saveData) {
       heroVideo.pause();
