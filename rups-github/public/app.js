@@ -31,7 +31,7 @@ verifyForm.innerHTML = `
     <div class="code-inputs">${Array.from({length:6},(_,i)=>`<input name="digit${i+1}" type="text" inputmode="numeric" autocomplete="${i===0?'one-time-code':'off'}" pattern="[0-9]" maxlength="6" required aria-label="Digit ${i+1} of 6" aria-describedby="code-help">`).join('')}</div>
   </fieldset>
   <p id="code-help" class="verification-help">Your code is valid for 10 minutes.<br>Can’t find it? Check your spam folder.</p>
-  <button class="button verify-submit" type="submit">Verify email <span aria-hidden="true">↗</span></button>
+  <button class="button verify-submit" type="submit">Verify email <span aria-hidden="true"><svg class="arrow-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M7 7h10v10"/></svg></span></button>
   <div class="verification-actions"><button type="button" id="resend-code" class="text-button">Send a new code</button><span aria-hidden="true">·</span><button type="button" id="edit-details" class="text-button">Change email</button></div>
   <p class="verification-support">Need a hand? <a href="mailto:support@rups.io">Contact support</a></p>`;
 form.after(verifyForm);

@@ -79,3 +79,6 @@ html.no-motion .button:hover,html.no-motion .social-link:hover{transform:none}
 html{scroll-padding-top:106px}
 @media(max-width:720px){html{scroll-padding-top:92px}.header .mobile-nav{max-height:calc(100dvh - 76px)}}
 .header .brand-mark{mix-blend-mode:multiply}
+
+/* Vector arrows stay monochrome on iOS and never use emoji fonts. */
+.arrow-icon{display:inline-block;width:1em;height:1em;flex-shrink:0;vertical-align:-.12em;pointer-events:none}
