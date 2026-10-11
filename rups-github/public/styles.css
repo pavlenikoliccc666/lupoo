@@ -83,15 +83,11 @@ html{scroll-padding-top:106px}
 /* Vector arrows stay monochrome on iOS and never use emoji fonts. */
 .arrow-icon{display:inline-block;width:1em;height:1em;flex-shrink:0;vertical-align:-.12em;pointer-events:none}
 
-/* Keep the clinic scene visible on small screens, without text covering it. */
+/* Keep the About copy over the lightweight video on phones. */
 @media(max-width:720px){
-.about-video-hero{display:flex;flex-direction:column;align-items:stretch;height:auto;min-height:0;max-height:none;padding:0;background:#f5f8fb;color:#182b35}
-.about-video-hero .about-film{position:relative;inset:auto;z-index:0;display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;object-position:center;background:#e8eef1}
-.about-video-hero .about-video-shade{display:none}
-.about-video-copy{padding:32px 6% 28px}
-.about-video-copy h1{font-size:clamp(2.4rem,9vw,3.7rem);line-height:1.06}
-.about-video-copy .eyebrow{color:#006fff}
-.about-video-copy>p:not(.eyebrow){color:#455b67;margin:22px 0;font-size:1.05rem}
-.about-video-bottom{position:static;margin:0 6% 24px;padding-top:20px;border-top:1px solid #cdd8df;color:#455b67}
-.about-video-bottom>span{max-width:none}
+.about-video-hero{height:calc(100svh - 76px);min-height:620px;max-height:840px;padding:56px 6% 120px;align-items:center}
+.about-video-hero .about-film{object-position:45% center}
+.about-video-hero .about-video-shade{background:linear-gradient(90deg,rgba(12,32,43,.65),rgba(12,32,43,.22)),linear-gradient(0deg,rgba(12,32,43,.65),transparent 70%)}
+.about-video-copy h1{font-size:clamp(2.6rem,10vw,4.2rem);line-height:1.06}
+.about-video-copy>p:not(.eyebrow){margin:24px 0}
 }
